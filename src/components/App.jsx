@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 
 // let App =(props) => {
@@ -9,27 +9,41 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "Zach",
+            text: "Hello world",
             placeholder: "Text here",
+            inputText: '',
+            hasLoaded: false
         }
     }
-    onInputChange = (value) => {
-        this.setState({ value: value })
+    handleClick = () => {
+        this.setState({ hasLoaded: !this.state.hasLoaded })
+    }
+
+
+
+    onInputChange = (e) => {
+        this.setState({ inputText: e.target.value })
     }
 
 
     render() {
-        return (
-            <div>
-                <h1>{this.props.name}</h1>
-                <h1>{this.props.value}</h1>
-                <input placeholder={this.state.placeholder}
-                    value={this.state.text} onChange={(event) => this.onInputChange(event.target.value)} />
-
-            </div>
-        )
+        if (this.state.hasLoaded === true) {
+            return (
+                <Fragment>
+                    <h1>{this.props.name}</h1>
+                    <input type="text" value={this.state.inputText} placeholder={this.state.placeholder} onChange={(e) => { this.onInputChange(e) }} />
+                    <h1>{this.state.inputText}</h1>
+                    <button onClick={this.handleClick} >Load it!</button>
+                </Fragment>
+            )
+        } else {
+            return (
+                <Fragment>
+                    <h1>Loading...</h1>
+                    <button onClick={this.handleClick}>Load it!</button>
+                </Fragment>
+            )
+        }
     }
 }
-
-export default App;
-
+    export default App;
